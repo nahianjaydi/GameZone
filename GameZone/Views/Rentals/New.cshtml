@@ -14,7 +14,7 @@
     <div class="form-group">
         <label>Game</label>
         <div class="tt-container">
-            <input id="game" name="game" data-rule-atLeastOneMovie="true" type="text" value="" class="form-control" />
+            <input id="game" name="game" data-rule-atLeastOneGame="true" type="text" value="" class="form-control" />
         </div>
     </div>
     <div class="row">
@@ -51,7 +51,7 @@
                 name: 'customers',
                 display: 'name',
                 source: customers
-            }).on("typeahead:select", function (e, customer) {
+            }).on("typeahead:select", function(e, customer) {
                 vm.customerId = customer.id;
             });
 
@@ -72,14 +72,14 @@
                 name: 'games',
                 display: 'name',
                 source: games
-            }).on("typeahead:select", function (e, game) {
+            }).on("typeahead:select", function(e, game) {
                 $("#games").append("<li class='list-group-item'>" + game.name + "</li>");
                 $("#game").typeahead("val", "");
                 vm.gameIds.push(game.id);
                 });
 
             $.validator.addMethod("validCustomer", function () {
-                return vm.customerId && vm.customerId != 0;
+                return vm.customerId && vm.customerId !== 0;
             }, "Please select a valid customer.");
 
             $.validator.addMethod("atLeastOneGame", function () {
@@ -89,11 +89,11 @@
             var validator = $("#newRental").validate({
                 submitHandler: function () {
                     $.ajax({
-                        url: "api/newRentals",
+                        url: "/api/newRentals",
                         method: "post",
                         data: vm
                     }).done(function () {
-                        toastr.success("Rental successfully recorded.");
+                        toastr.success("Rentals successfully recorded.");
 
                         $("#customer").typeahead("val", "");
                         $("#game").typeahead("val", "");
